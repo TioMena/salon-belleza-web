@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Salón Belleza Web
 
-## Getting Started
+Sitio web para salón de belleza con reserva de citas online. Creado con Next.js 16, TypeScript, Tailwind CSS v4.
 
-First, run the development server:
+## Funcionalidades
+
+- **Home** — Hero, servicios destacados, equipo, testimonios
+- **Estilistas** — Perfiles con foto, especialidad, bio y modal de detalle
+- **Servicios y Precios** — Listado completo agrupado por categoría con duración estimada
+- **Galería** — Grid masonry con filtro por categoría
+- **Reserva de Citas** — Wizard 4 pasos (Estilista → Servicio → Fecha/Hora → Datos del cliente), cálculo de horarios disponibles
+- **Testimonios** — Grid de reseñas + formulario para agregar nuevas
+- **Contacto** — Formulario de contacto e información del salón
+
+## Arquitectura
+
+- **Next.js 16** (App Router), páginas client-side (`"use client"`)
+- **API routes simuladas** — datos en memoria (`src/lib/store.ts`), se pierden al reiniciar el servidor
+- **Estilos:** Tailwind CSS v4 con tokens personalizados: `bg-primary`, `text-accent`, `bg-surface`, `border-border`
+- **Iconos:** lucide-react
+- **Fechas:** date-fns con locale español
+
+## Comandos
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev       # desarrollo (Turbopack)
+npm run build     # build producción
+npm run start     # servidor producción
+npm run lint      # ESLint (next lint removido en v16)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+├── app/
+│   ├── page.tsx            # Home
+│   ├── layout.tsx          # Layout global (Navbar + Footer)
+│   ├── book/               # Reserva
+│   ├── stylists/           # Estilistas
+│   ├── prices/             # Precios
+│   ├── gallery/            # Galería
+│   ├── testimonials/       # Testimonios
+│   ├── contact/            # Contacto
+│   └── api/                # API routes (stylists, services, appointments, testimonials, contact)
+├── components/
+│   ├── ui/                 # Button, Card, Input, StarRating, LoadingSpinner
+│   ├── layout/             # Navbar, Footer
+│   └── booking/            # BookingWizard (4 pasos)
+├── lib/
+│   ├── types.ts            # Interfaces TypeScript
+│   └── store.ts            # Store en memoria
+└── data/                   # Seed data (stylists, services, testimonials)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Pendientes
 
-## Learn More
+- [ ] Agregar precios reales en CLP (`src/data/services.ts`, campo `price`)
+- [ ] Fotos reales de estilistas y trabajos (reemplazar Unsplash placeholders)
+- [ ] Logo del salón
+- [ ] Migrar store a base de datos persistente (ej: Supabase, SQLite)
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Requiere hosting con Node runtime:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Plataforma | Comando / Config |
+|---|---|
+| **Vercel** | Conectar repo → deploy automático |
+| **Railway** | Build: `npm run build`, Start: `npm start` |
+| **Render** | Build: `npm run build`, Start: `npm start` |
 
-## Deploy on Vercel
+No funciona en hostings estáticos (GitHub Pages, Netlify sin serverless).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Repositorio
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+https://github.com/TioMena/salon-belleza-web
