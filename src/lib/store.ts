@@ -2,7 +2,7 @@ import { Appointment, Testimonial } from "./types"
 
 const appointments = new Map<string, Appointment>()
 const testimonials = new Map<string, Testimonial>()
-let contactMessages: { name: string; email: string; message: string; date: string }[] = []
+const contactMessages: { name: string; email: string; message: string; date: string }[] = []
 
 export function addAppointment(a: Appointment): Appointment {
   appointments.set(a.id, a)

@@ -1,71 +1,66 @@
 import Link from "next/link"
-import { Scissors, Globe, MapPin, Phone, Clock } from "lucide-react"
+import { MapPin, Phone, Clock } from "lucide-react"
 
 export default function Footer() {
   return (
     <footer className="bg-primary text-white mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div>
-            <div className="flex items-center gap-2 font-bold text-lg mb-4">
-              <Scissors className="w-6 h-6" />
-              <span>Salón Belleza</span>
+            <div className="flex items-center gap-1.5 mb-4">
+              <span className="text-xl font-serif font-semibold tracking-tight">Salón Belleza</span>
+              <span className="text-gold text-lg leading-none">✦</span>
             </div>
-            <p className="text-gray-400 text-sm">
-              Tu salón de belleza de confianza. Estilo moderno, resultados profesionales.
+            <p className="text-white/50 text-sm leading-relaxed max-w-xs">
+              En el corazón de Providencia, un espacio dedicado al cuidado personal y la belleza con alma de oficio.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Enlaces</h3>
-            <div className="space-y-2 text-sm text-gray-400">
-              <Link href="/stylists" className="block hover:text-white transition-colors">Estilistas</Link>
-              <Link href="/prices" className="block hover:text-white transition-colors">Precios</Link>
-              <Link href="/gallery" className="block hover:text-white transition-colors">Galería</Link>
-              <Link href="/book" className="block hover:text-white transition-colors">Reservar Cita</Link>
+            <h3 className="text-gold font-medium mb-5 text-sm uppercase tracking-widest">Enlaces</h3>
+            <div className="space-y-3 text-sm text-white/60">
+              <Link href="/stylists" className="block hover:text-gold transition-colors">Estilistas</Link>
+              <Link href="/prices" className="block hover:text-gold transition-colors">Precios</Link>
+              <Link href="/gallery" className="block hover:text-gold transition-colors">Galería</Link>
+              <Link href="/book" className="block hover:text-gold transition-colors">Reservar Cita</Link>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Horarios</h3>
-            <div className="space-y-2 text-sm text-gray-400">
+            <h3 className="text-gold font-medium mb-5 text-sm uppercase tracking-widest">Horarios</h3>
+            <div className="space-y-3 text-sm text-white/60">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
+                <Clock className="w-4 h-4 text-gold/60" />
                 <span>Lun - Vie: 9:00 - 20:00</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
+                <Clock className="w-4 h-4 text-gold/60" />
                 <span>Sáb: 9:00 - 18:00</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4" />
+                <Clock className="w-4 h-4 text-gold/60" />
                 <span>Dom: Cerrado</span>
               </div>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Contacto</h3>
-            <div className="space-y-2 text-sm text-gray-400">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
+            <h3 className="text-gold font-medium mb-5 text-sm uppercase tracking-widest">Contacto</h3>
+            <div className="space-y-3 text-sm text-white/60">
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-gold/60 shrink-0 mt-0.5" />
                 <span>Av. Providencia 1234, Santiago</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4 text-gold/60" />
                 <span>+56 9 1234 5678</span>
-              </div>
-              <div className="flex items-center gap-3 mt-4">
-                <a href="#" className="hover:text-white transition-colors" aria-label="Redes sociales">
-                  <Globe className="w-5 h-5" />
-                </a>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} Salón Belleza. Todos los derechos reservados.
+        <div className="border-t border-white/10 mt-12 pt-8 text-center text-sm text-white/30">
+          &copy; {new Date().getFullYear()} Salón Belleza
         </div>
       </div>
     </footer>

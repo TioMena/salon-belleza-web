@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Clock, Scissors } from "lucide-react"
+import { Clock } from "lucide-react"
 import Link from "next/link"
 import { Service } from "@/lib/types"
 import Button from "@/components/ui/Button"
@@ -23,40 +23,41 @@ export default function PricesPage() {
 
   return (
     <div className="py-20 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">Servicios y Precios</h1>
-          <p className="text-accent max-w-xl mx-auto">
-            Todos nuestros servicios con su duración estimada. Consulta precios directamente con el salón.
+      <div className="max-w-3xl mx-auto">
+        <div className="mb-14">
+          <p className="text-sm font-medium text-gold uppercase tracking-[0.2em] mb-3">Precios</p>
+          <h1 className="text-3xl sm:text-4xl font-serif font-semibold text-primary">
+            Servicios y Precios
+          </h1>
+          <p className="text-accent mt-3 max-w-lg">
+            Todos nuestros servicios con duración estimada. Los precios son referenciales — consúltanos para un presupuesto exacto.
           </p>
         </div>
 
         {categories.map((category) => {
           const catServices = services.filter((s) => s.category === category)
           return (
-            <div key={category} id={category} className="mb-12">
-              <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center">
-                  <Scissors className="w-4 h-4 text-primary" />
-                </span>
+            <div key={category} id={category} className="mb-14">
+              <h2 className="font-serif font-semibold text-2xl text-primary mb-6 flex items-center gap-3">
+                <span className="w-6 h-px bg-gold/60" />
                 {category}
               </h2>
-              <div className="space-y-3">
+              <div className="space-y-0 divide-y divide-border/60">
                 {catServices.map((service) => (
                   <div
                     key={service.id}
-                    className="bg-surface rounded-xl border border-border p-5 flex items-center justify-between gap-4 hover:border-primary/30 transition-colors"
+                    className="py-4 flex items-start justify-between gap-4 group hover:bg-gold/[0.02] -mx-4 px-4 rounded-lg transition-colors"
                   >
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-primary">{service.name}</h3>
-                      <p className="text-sm text-accent mt-0.5">{service.description}</p>
+                      <h3 className="font-medium text-primary text-sm sm:text-base">{service.name}</h3>
+                      <p className="text-xs sm:text-sm text-accent/70 mt-0.5">{service.description}</p>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-accent shrink-0">
-                      <Clock className="w-4 h-4" />
-                      <span>{service.duration} min</span>
-                    </div>
-                    <div className="text-right shrink-0 min-w-[80px]">
-                      <span className="font-semibold text-primary">
+                    <div className="flex items-center gap-4 shrink-0">
+                      <span className="text-xs text-accent/50 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {service.duration} min
+                      </span>
+                      <span className="font-medium text-gold text-sm sm:text-base min-w-[70px] text-right">
                         {service.price === 0 ? "—" : `$${service.price.toLocaleString()}`}
                       </span>
                     </div>
@@ -67,9 +68,10 @@ export default function PricesPage() {
           )
         })}
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-12 pt-10 border-t border-border/60">
+          <p className="text-sm text-accent mb-6">¿Lista para agendar?</p>
           <Link href="/book">
-            <Button className="px-8 py-3 text-base">
+            <Button className="bg-gold text-primary hover:bg-gold-light px-8 py-3 text-base font-medium">
               Reservar una Cita
             </Button>
           </Link>

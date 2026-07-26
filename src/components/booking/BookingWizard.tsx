@@ -1,15 +1,13 @@
 "use client"
 
 import { useEffect, useState, useMemo } from "react"
-import { Check, ChevronLeft, ChevronRight, Calendar, Clock } from "lucide-react"
-import { Stylist, Service, BookingStep } from "@/lib/types"
+import { Check, ChevronLeft, ChevronRight, Clock } from "lucide-react"
+import { BookingStep } from "@/lib/types"
 import { stylists } from "@/data/stylists"
 import { services } from "@/data/services"
 import Button from "@/components/ui/Button"
-import Card from "@/components/ui/Card"
 import Input from "@/components/ui/Input"
-import LoadingSpinner from "@/components/ui/LoadingSpinner"
-import { format, addDays, isBefore, startOfToday, parseISO } from "date-fns"
+import { format, addDays, startOfToday, parseISO } from "date-fns"
 import { es } from "date-fns/locale"
 
 const steps: { step: BookingStep; title: string }[] = [
@@ -115,23 +113,26 @@ export default function BookingWizard() {
   if (confirmed) {
     return (
       <div className="text-center py-16">
-        <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-          <Check className="w-8 h-8 text-green-600" />
+        <div className="w-20 h-20 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6">
+          <Check className="w-8 h-8 text-gold" />
         </div>
-        <h2 className="text-3xl font-bold text-primary mb-3">Cita Confirmada</h2>
+        <h2 className="text-3xl font-serif font-semibold text-primary mb-3">Cita Confirmada</h2>
         <p className="text-accent mb-2">Tu reserva se ha realizado correctamente.</p>
-        <div className="max-w-sm mx-auto bg-gray-50 rounded-xl p-5 mt-6 text-left space-y-2 text-sm">
+        <div className="max-w-sm mx-auto bg-bg rounded-2xl p-6 mt-6 text-left space-y-2 text-sm border border-border">
           {selectedStylist && (
-            <p><strong>Estilista:</strong> {selectedStylist.name}</p>
+            <p><strong className="text-primary">Estilista:</strong> <span className="text-accent">{selectedStylist.name}</span></p>
           )}
           {selectedService && (
-            <p><strong>Servicio:</strong> {selectedService.name}</p>
+            <p><strong className="text-primary">Servicio:</strong> <span className="text-accent">{selectedService.name}</span></p>
           )}
-          <p><strong>Fecha:</strong> {date ? format(parseISO(date), "EEEE d 'de' MMMM, yyyy", { locale: es }) : ""}</p>
-          <p><strong>Hora:</strong> {time} hrs</p>
-          <p><strong>Cliente:</strong> {clientName}</p>
+          <p><strong className="text-primary">Fecha:</strong> <span className="text-accent">{date ? format(parseISO(date), "EEEE d 'de' MMMM, yyyy", { locale: es }) : ""}</span></p>
+          <p><strong className="text-primary">Hora:</strong> <span className="text-accent">{time} hrs</span></p>
+          <p><strong className="text-primary">Cliente:</strong> <span className="text-accent">{clientName}</span></p>
         </div>
-        <Button className="mt-8" onClick={() => { setStep(1); setStylistId(""); setServiceId(""); setDate(""); setTime(""); setClientName(""); setClientPhone(""); setClientEmail(""); setConfirmed(false) }}>
+        <Button
+          className="mt-8 bg-gold text-primary hover:bg-gold-light"
+          onClick={() => { setStep(1); setStylistId(""); setServiceId(""); setDate(""); setTime(""); setClientName(""); setClientPhone(""); setClientEmail(""); setConfirmed(false) }}
+        >
           Nueva Reserva
         </Button>
       </div>
@@ -147,10 +148,10 @@ export default function BookingWizard() {
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
                   step > s.step
-                    ? "bg-primary text-white"
+                    ? "bg-gold text-primary"
                     : step === s.step
-                    ? "bg-primary text-white ring-4 ring-primary/20"
-                    : "bg-gray-100 text-accent"
+                    ? "bg-gold text-primary ring-4 ring-gold/20"
+                    : "bg-border/50 text-accent"
                 }`}
               >
                 {step > s.step ? <Check className="w-4 h-4" /> : s.step}
@@ -166,7 +167,7 @@ export default function BookingWizard() {
             {i < steps.length - 1 && (
               <div
                 className={`flex-1 h-px mx-3 ${
-                  step > s.step ? "bg-primary" : "bg-gray-200"
+                  step > s.step ? "bg-gold" : "bg-border/50"
                 }`}
               />
             )}
@@ -176,18 +177,20 @@ export default function BookingWizard() {
 
       {step === 1 && (
         <div>
-          <h2 className="text-2xl font-bold text-primary mb-6">Elige tu Estilista</h2>
+          <h2 className="text-xl font-serif font-semibold text-primary mb-6">Elige tu Estilista</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {stylists.map((s) => (
-              <Card
+              <div
                 key={s.id}
-                className={`p-4 cursor-pointer ${
-                  stylistId === s.id ? "ring-2 ring-primary border-primary" : ""
+                className={`bg-surface rounded-2xl border p-5 cursor-pointer transition-all ${
+                  stylistId === s.id
+                    ? "border-gold ring-1 ring-gold/30"
+                    : "border-border hover:border-gold/30"
                 }`}
                 onClick={() => setStylistId(s.id)}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-100 shrink-0">
+                  <div className="w-14 h-14 rounded-full overflow-hidden bg-bg shrink-0 ring-1 ring-gold/20">
                     <img src={s.photo} alt={s.name} className="w-full h-full object-cover" />
                   </div>
                   <div>
@@ -195,7 +198,7 @@ export default function BookingWizard() {
                     <p className="text-sm text-accent">{s.specialty}</p>
                   </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -203,32 +206,34 @@ export default function BookingWizard() {
 
       {step === 2 && (
         <div>
-          <h2 className="text-2xl font-bold text-primary mb-6">Elige tu Servicio</h2>
+          <h2 className="text-xl font-serif font-semibold text-primary mb-6">Elige tu Servicio</h2>
           <div className="space-y-3">
             {services.map((s) => (
-              <Card
+              <div
                 key={s.id}
-                className={`p-4 cursor-pointer ${
-                  serviceId === s.id ? "ring-2 ring-primary border-primary" : ""
+                className={`bg-surface rounded-2xl border p-5 cursor-pointer transition-all ${
+                  serviceId === s.id
+                    ? "border-gold ring-1 ring-gold/30"
+                    : "border-border hover:border-gold/30"
                 }`}
                 onClick={() => setServiceId(s.id)}
               >
                 <div className="flex items-center justify-between">
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <p className="font-medium text-primary">{s.name}</p>
                     <p className="text-sm text-accent">{s.category}</p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-accent flex items-center gap-1 justify-end">
+                  <div className="text-right shrink-0 ml-4">
+                    <p className="text-xs text-accent flex items-center gap-1 justify-end">
                       <Clock className="w-3 h-3" />
                       {s.duration} min
                     </p>
-                    <p className="font-semibold text-primary">
+                    <p className="font-medium text-gold text-sm">
                       {s.price === 0 ? "Consultar" : `$${s.price.toLocaleString()}`}
                     </p>
                   </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -236,7 +241,7 @@ export default function BookingWizard() {
 
       {step === 3 && (
         <div>
-          <h2 className="text-2xl font-bold text-primary mb-2">Elige Fecha y Hora</h2>
+          <h2 className="text-xl font-serif font-semibold text-primary mb-2">Elige Fecha y Hora</h2>
           <p className="text-accent text-sm mb-6">
             {selectedService && `Duración estimada: ${selectedService.duration} minutos`}
           </p>
@@ -254,10 +259,10 @@ export default function BookingWizard() {
                     key={dateStr}
                     disabled={isWeekend}
                     onClick={() => { setDate(dateStr); setTime("") }}
-                    className={`w-14 py-2 rounded-lg text-center text-sm transition-colors disabled:opacity-30 disabled:cursor-not-allowed ${
+                    className={`w-14 py-2 rounded-xl text-center text-sm transition-colors disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 ${
                       date === dateStr
-                        ? "bg-primary text-white"
-                        : "bg-gray-50 text-primary hover:bg-gray-100"
+                        ? "bg-gold text-primary"
+                        : "bg-surface border border-border text-primary hover:border-gold/40"
                     }`}
                   >
                     <span className="text-xs block text-accent">{dayName}</span>
@@ -271,7 +276,7 @@ export default function BookingWizard() {
           {date && (
             <div>
               <label className="block text-sm font-medium text-primary mb-3">
-                <Clock className="w-4 h-4 inline mr-1" />
+                <Clock className="w-4 h-4 inline mr-1 text-gold" />
                 Horario
               </label>
               {availableSlots.length === 0 ? (
@@ -282,10 +287,10 @@ export default function BookingWizard() {
                     <button
                       key={slot}
                       onClick={() => setTime(slot)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/50 ${
                         time === slot
-                          ? "bg-primary text-white"
-                          : "bg-gray-50 text-primary hover:bg-gray-100 border border-border"
+                          ? "bg-gold text-primary"
+                          : "bg-surface border border-border text-primary hover:border-gold/40"
                       }`}
                     >
                       {slot}
@@ -300,13 +305,13 @@ export default function BookingWizard() {
 
       {step === 4 && (
         <div>
-          <h2 className="text-2xl font-bold text-primary mb-6">Tus Datos</h2>
+          <h2 className="text-xl font-serif font-semibold text-primary mb-6">Tus Datos</h2>
 
-          <div className="bg-gray-50 rounded-xl p-5 mb-6 space-y-1 text-sm">
-            <p><strong>Estilista:</strong> {selectedStylist?.name}</p>
-            <p><strong>Servicio:</strong> {selectedService?.name} ({selectedService?.duration} min)</p>
-            <p><strong>Fecha:</strong> {date ? format(parseISO(date), "EEEE d 'de' MMMM, yyyy", { locale: es }) : ""}</p>
-            <p><strong>Hora:</strong> {time} hrs</p>
+          <div className="bg-bg rounded-2xl border border-border p-5 mb-6 space-y-1.5 text-sm">
+            <p><strong className="text-primary">Estilista:</strong> <span className="text-accent">{selectedStylist?.name}</span></p>
+            <p><strong className="text-primary">Servicio:</strong> <span className="text-accent">{selectedService?.name} ({selectedService?.duration} min)</span></p>
+            <p><strong className="text-primary">Fecha:</strong> <span className="text-accent">{date ? format(parseISO(date), "EEEE d 'de' MMMM, yyyy", { locale: es }) : ""}</span></p>
+            <p><strong className="text-primary">Hora:</strong> <span className="text-accent">{time} hrs</span></p>
           </div>
 
           <div className="space-y-4">
@@ -332,7 +337,7 @@ export default function BookingWizard() {
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+          {error && <p className="text-error text-sm mt-4">{error}</p>}
         </div>
       )}
 
@@ -348,7 +353,7 @@ export default function BookingWizard() {
             <ChevronRight className="w-4 h-4" />
           </Button>
         ) : (
-          <Button onClick={handleConfirm} loading={submitting}>
+          <Button onClick={handleConfirm} loading={submitting} className="bg-gold text-primary hover:bg-gold-light">
             Confirmar Reserva
             <Check className="w-4 h-4" />
           </Button>

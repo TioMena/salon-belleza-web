@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Scissors, Sparkles, Star, ArrowRight, Quote } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Button from "@/components/ui/Button"
-import Card from "@/components/ui/Card"
 import StarRating from "@/components/ui/StarRating"
 import LoadingSpinner from "@/components/ui/LoadingSpinner"
 import { Stylist, Service, Testimonial } from "@/lib/types"
@@ -35,80 +34,107 @@ export default function HomePage() {
 
   return (
     <div>
-      <section className="relative min-h-[85vh] flex items-center justify-center bg-gradient-to-br from-primary to-primary-dark text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl" />
+      {/* ─── Hero ─── */}
+      <section className="relative min-h-[90vh] flex items-center px-4 pt-16">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/3 right-0 w-[40vw] h-[40vw] rounded-full bg-gold/5 blur-3xl" />
+          <div className="absolute bottom-1/4 left-0 w-[30vw] h-[30vw] rounded-full bg-rose/5 blur-3xl" />
         </div>
-        <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 text-sm mb-8">
-            <Sparkles className="w-4 h-4" />
-            <span>Estilo moderno, resultados profesionales</span>
-          </div>
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold mb-6 leading-tight">
-            Donde tu estilo
-            <br />
-            <span className="text-white/80">cobra vida</span>
-          </h1>
-          <p className="text-lg sm:text-xl text-white/70 mb-10 max-w-xl mx-auto">
-            Cortes, coloración, tratamientos y más. Tu momento de belleza comienza aquí.
-          </p>
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <Link href="/book">
-              <Button className="bg-white text-primary hover:bg-gray-100 px-8 py-3 text-base">
-                Reserva tu Cita
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
-            <Link href="/prices">
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 text-base">
-                Ver Servicios
-              </Button>
-            </Link>
+        <div className="relative w-full max-w-6xl mx-auto">
+          <div className="border-2 border-dashed border-gold/25 rounded-3xl p-8 sm:p-12 lg:p-16">
+            <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+              <div className="lg:col-span-3">
+                <p className="text-sm font-medium text-gold uppercase tracking-[0.2em] mb-6">
+                  Salón Boutique en Providencia
+                </p>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-semibold text-primary leading-[1.08] tracking-tight">
+                  Donde tu estilo
+                  <br />
+                  <span className="italic text-primary/60">cobra vida</span>
+                </h1>
+                <div className="flex items-center gap-3 my-8">
+                  <span className="h-px w-12 bg-gold/60" />
+                  <span className="text-gold text-lg">✦</span>
+                  <span className="h-px w-12 bg-gold/60" />
+                </div>
+                <p className="text-accent text-base sm:text-lg max-w-md leading-relaxed">
+                  Cortes, coloración, tratamientos y más. Un espacio para el cuidado personal en el corazón de Santiago.
+                </p>
+                <div className="flex items-center gap-4 flex-wrap mt-8">
+                  <Link href="/book">
+                    <Button className="bg-gold text-primary hover:bg-gold-light px-8 py-3 text-base font-medium">
+                      Reservar Cita
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
+                  <Link href="/prices">
+                    <Button variant="outline" className="border-gold text-primary hover:bg-gold hover:text-primary px-8 py-3 text-base">
+                      Ver Servicios
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              <div className="hidden lg:flex lg:col-span-2 items-center justify-center">
+                <div className="relative">
+                  <div className="w-48 h-48 rounded-full border-2 border-gold/30 flex items-center justify-center">
+                    <span className="text-7xl font-serif font-light text-primary/10">✦</span>
+                  </div>
+                  <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-gold/10" />
+                  <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-full border border-gold/20" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">Nuestros Servicios</h2>
-            <p className="text-accent max-w-xl mx-auto">
-              Ofrecemos una amplia gama de servicios para el cuidado de tu cabello y belleza.
+      {/* ─── Servicios ─── */}
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-14">
+            <p className="text-sm font-medium text-gold uppercase tracking-[0.2em] mb-3">Servicios</p>
+            <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-primary">
+              Hechos a tu medida
+            </h2>
+            <p className="text-accent mt-3 max-w-lg">
+              Desde un corte rápido hasta un tratamiento completo. Cada servicio con el tiempo y la atención que mereces.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3 justify-center mb-10">
+          <div className="flex flex-wrap gap-2 justify-start mb-10">
             {categories.map((cat) => (
               <Link
                 key={cat}
                 href={`/prices#${cat}`}
-                className="px-4 py-2 rounded-full border border-border text-sm text-accent hover:border-primary hover:text-primary transition-colors"
+                className="px-4 py-1.5 rounded-full border border-border text-sm text-accent hover:border-gold hover:text-primary transition-colors"
               >
                 {cat}
               </Link>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {featuredServices.map((service) => (
-              <Card key={service.id} className="p-6">
-                <div className="w-10 h-10 rounded-lg bg-primary/5 flex items-center justify-center mb-4">
-                  <Scissors className="w-5 h-5 text-primary" />
+              <div
+                key={service.id}
+                className="group bg-surface rounded-2xl border border-border p-6 hover:border-gold/40 transition-all duration-300"
+              >
+                <div className="w-9 h-9 rounded-full border border-gold/20 flex items-center justify-center mb-4 group-hover:border-gold/60 transition-colors">
+                  <span className="text-gold text-xs">✦</span>
                 </div>
-                <h3 className="font-semibold text-primary mb-2">{service.name}</h3>
-                <p className="text-sm text-accent mb-3">{service.description}</p>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-accent">{service.duration} min</span>
-                  <span className="font-semibold text-primary">{service.price === 0 ? "Consultar" : `$${service.price.toLocaleString()}`}</span>
+                <h3 className="font-serif font-semibold text-primary text-lg mb-2">{service.name}</h3>
+                <p className="text-sm text-accent leading-relaxed mb-4">{service.description}</p>
+                <div className="flex items-center justify-between text-sm pt-3 border-t border-border/60">
+                  <span className="text-accent/70">{service.duration} min</span>
+                  <span className="font-medium text-gold">{service.price === 0 ? "Consultar" : `$${service.price.toLocaleString()}`}</span>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-10">
+          <div className="mt-10 text-center">
             <Link href="/prices">
-              <Button variant="outline">
+              <Button variant="outline" className="border-gold text-primary hover:bg-gold hover:text-primary">
                 Ver Todos los Servicios
                 <ArrowRight className="w-4 h-4" />
               </Button>
@@ -117,19 +143,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">Conoce a Nuestro Equipo</h2>
-            <p className="text-accent max-w-xl mx-auto">
-              Profesionales apasionados por hacer lucir tu mejor versión.
+      {/* ─── Equipo ─── */}
+      <section className="py-24 px-4 bg-surface">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-14">
+            <p className="text-sm font-medium text-gold uppercase tracking-[0.2em] mb-3">Equipo</p>
+            <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-primary">
+              Detrás de cada look
+            </h2>
+            <p className="text-accent mt-3 max-w-lg">
+              Cuatro profesionales, cada uno con una especialidad. Todos con una obsesión compartida: que te vayas feliz.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {stylists.map((stylist) => (
-              <Card key={stylist.id} className="p-6 text-center">
-                <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 bg-gray-100">
+              <div key={stylist.id} className="group text-center">
+                <div className="w-28 h-28 rounded-full overflow-hidden mx-auto mb-5 ring-2 ring-gold/20 group-hover:ring-gold/60 transition-all duration-300">
                   <img
                     src={stylist.photo}
                     alt={stylist.name}
@@ -137,17 +167,17 @@ export default function HomePage() {
                     loading="lazy"
                   />
                 </div>
-                <h3 className="font-semibold text-primary">{stylist.name}</h3>
-                <p className="text-sm text-accent mb-2">{stylist.specialty}</p>
-                <p className="text-xs text-accent/70">{stylist.yearsExperience} años de experiencia</p>
-              </Card>
+                <h3 className="font-serif font-semibold text-primary text-lg">{stylist.name}</h3>
+                <p className="text-sm text-accent mt-1">{stylist.specialty}</p>
+                <p className="text-xs text-accent/50 mt-2">{stylist.yearsExperience} años de experiencia</p>
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-10">
+          <div className="mt-12 text-center">
             <Link href="/stylists">
-              <Button variant="outline">
-                Conocer Más
+              <Button variant="outline" className="border-gold text-primary hover:bg-gold hover:text-primary">
+                Conocer al Equipo
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
@@ -155,31 +185,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">Lo Que Dicen Nuestros Clientes</h2>
-            <p className="text-accent max-w-xl mx-auto">
-              La satisfacción de nuestros clientes es nuestra mejor carta de presentación.
-            </p>
+      {/* ─── Testimonios ─── */}
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-14">
+            <p className="text-sm font-medium text-gold uppercase tracking-[0.2em] mb-3">Testimonios</p>
+            <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-primary">
+              Lo que dicen de nosotros
+            </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {testimonials.map((t) => (
-              <Card key={t.id} className="p-6" hover={false}>
-                <Quote className="w-8 h-8 text-primary/20 mb-3" />
-                <p className="text-sm text-primary mb-4 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                <div className="flex items-center gap-2 mb-2">
+              <div key={t.id} className="bg-surface rounded-2xl border border-border p-6 flex flex-col">
+                <div className="text-gold/30 text-4xl font-serif leading-none mb-3">&ldquo;</div>
+                <p className="text-sm text-primary/80 leading-relaxed flex-1">&ldquo;{t.text}&rdquo;</p>
+                <div className="mt-4 pt-4 border-t border-border/60">
                   <StarRating rating={t.rating} />
+                  <p className="font-medium text-sm text-primary mt-2">{t.clientName}</p>
                 </div>
-                <p className="font-medium text-sm text-primary">{t.clientName}</p>
-              </Card>
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-10">
+          <div className="mt-10 text-center">
             <Link href="/testimonials">
-              <Button variant="outline">
+              <Button variant="outline" className="border-gold text-primary hover:bg-gold hover:text-primary">
                 Ver Todos los Testimonios
                 <ArrowRight className="w-4 h-4" />
               </Button>

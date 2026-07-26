@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { MessageSquare, Star } from "lucide-react"
 import { Testimonial } from "@/lib/types"
-import Card from "@/components/ui/Card"
 import Button from "@/components/ui/Button"
 import Input from "@/components/ui/Input"
 import StarRating from "@/components/ui/StarRating"
@@ -17,14 +16,11 @@ export default function TestimonialsPage() {
   const [form, setForm] = useState({ clientName: "", rating: 5, text: "" })
   const [error, setError] = useState("")
 
-  const load = () => {
-    setLoading(true)
+  useEffect(() => {
     fetch("/api/testimonials")
       .then((r) => r.json())
       .then((data) => { setTestimonials(data); setLoading(false) })
-  }
-
-  useEffect(() => { load() }, [])
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,7 +35,9 @@ export default function TestimonialsPage() {
     if (res.ok) {
       setForm({ clientName: "", rating: 5, text: "" })
       setShowForm(false)
-      load()
+      fetch("/api/testimonials")
+        .then((r) => r.json())
+        .then((data) => setTestimonials(data))
     } else {
       setError("Error al enviar. Intenta de nuevo.")
     }
@@ -51,21 +49,28 @@ export default function TestimonialsPage() {
   return (
     <div className="py-20 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">Testimonios</h1>
-          <p className="text-accent max-w-xl mx-auto mb-8">
-            La opinión de nuestros clientes es lo más importante.
+        <div className="mb-14">
+          <p className="text-sm font-medium text-gold uppercase tracking-[0.2em] mb-3">Testimonios</p>
+          <h1 className="text-3xl sm:text-4xl font-serif font-semibold text-primary">
+            Lo que dicen de nosotros
+          </h1>
+          <p className="text-accent mt-3 max-w-lg">
+            La opinión de nuestros clientes es lo más importante. ¿Quieres compartir tu experiencia?
           </p>
-          <Button onClick={() => setShowForm(!showForm)} variant="outline">
+          <Button
+            onClick={() => setShowForm(!showForm)}
+            variant="outline"
+            className="mt-6 border-gold text-primary hover:bg-gold hover:text-primary"
+          >
             <MessageSquare className="w-4 h-4" />
             {showForm ? "Cancelar" : "Dejar un Testimonio"}
           </Button>
         </div>
 
         {showForm && (
-          <Card className="p-6 mb-10 max-w-lg mx-auto" hover={false}>
-            <h3 className="font-semibold text-primary mb-4">Comparte tu experiencia</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="bg-surface rounded-2xl border border-border p-8 mb-12 max-w-lg mx-auto">
+            <h3 className="font-serif font-semibold text-primary text-xl mb-6">Comparte tu experiencia</h3>
+            <form onSubmit={handleSubmit} className="space-y-5">
               <Input
                 label="Tu nombre"
                 id="name"
@@ -77,7 +82,7 @@ export default function TestimonialsPage() {
                 <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((n) => (
                     <button key={n} type="button" onClick={() => setForm({ ...form, rating: n })}>
-                      <Star className={`w-6 h-6 ${n <= form.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} />
+                      <Star className={`w-6 h-6 ${n <= form.rating ? "fill-gold text-gold" : "text-border"}`} />
                     </button>
                   ))}
                 </div>
@@ -89,34 +94,36 @@ export default function TestimonialsPage() {
                   rows={4}
                   value={form.text}
                   onChange={(e) => setForm({ ...form, text: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none"
+                  className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-primary text-sm focus:outline-none focus:ring-2 focus:ring-gold/20 focus:border-gold resize-none transition-all"
                   placeholder="Cuéntanos cómo fue tu experiencia..."
                 />
               </div>
-              {error && <p className="text-red-500 text-sm">{error}</p>}
-              <Button type="submit" loading={submitting}>Enviar Testimonio</Button>
+              {error && <p className="text-error text-sm">{error}</p>}
+              <Button type="submit" loading={submitting} className="bg-gold text-primary hover:bg-gold-light">
+                Enviar Testimonio
+              </Button>
             </form>
-          </Card>
+          </div>
         )}
 
         {testimonials.length === 0 ? (
-          <p className="text-center text-accent py-12">No hay testimonios aún. ¡Sé el primero!</p>
+          <p className="text-center text-accent py-16">No hay testimonios aún. ¡Sé el primero!</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {testimonials.map((t) => (
-              <Card key={t.id} className="p-6" hover={false}>
+              <div key={t.id} className="bg-surface rounded-2xl border border-border p-6 hover:border-gold/30 transition-colors">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/5 flex items-center justify-center text-primary font-bold text-lg">
+                  <div className="w-11 h-11 rounded-full bg-gold/10 flex items-center justify-center text-gold font-serif font-semibold text-base">
                     {t.clientName.charAt(0)}
                   </div>
                   <div>
-                    <p className="font-medium text-primary">{t.clientName}</p>
+                    <p className="font-medium text-primary text-sm">{t.clientName}</p>
                     <StarRating rating={t.rating} />
                   </div>
                 </div>
-                <p className="text-sm text-primary/80 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                <p className="text-xs text-accent mt-3">{t.date}</p>
-              </Card>
+                <p className="text-sm text-primary/70 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
+                <p className="text-xs text-accent/50 mt-3">{t.date}</p>
+              </div>
             ))}
           </div>
         )}

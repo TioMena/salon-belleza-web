@@ -26,22 +26,25 @@ export default function GalleryPage() {
   return (
     <div className="py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">Galería de Trabajos</h1>
-          <p className="text-accent max-w-xl mx-auto">
-            Algunos de nuestros mejores trabajos. Cada corte, color y peinado es único.
+        <div className="mb-14">
+          <p className="text-sm font-medium text-gold uppercase tracking-[0.2em] mb-3">Galería</p>
+          <h1 className="text-3xl sm:text-4xl font-serif font-semibold text-primary">
+            Nuestros trabajos
+          </h1>
+          <p className="text-accent mt-3 max-w-lg">
+            Cada corte, color y peinado es único. Aquí algunos de los momentos que hemos creado.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3 justify-center mb-10">
+        <div className="flex flex-wrap gap-2 justify-start mb-10">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={`px-5 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 filter === cat
-                  ? "bg-primary text-white"
-                  : "bg-gray-100 text-accent hover:bg-gray-200"
+                  ? "bg-gold text-primary"
+                  : "border border-border text-accent hover:border-gold hover:text-primary"
               }`}
             >
               {cat}
@@ -50,21 +53,30 @@ export default function GalleryPage() {
         </div>
 
         {filtered.length === 0 ? (
-          <p className="text-center text-accent py-12">No hay imágenes en esta categoría.</p>
+          <p className="text-center text-accent py-16">No hay imágenes en esta categoría.</p>
         ) : (
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
             {filtered.map((img, i) => (
               <div
                 key={i}
-                className="break-inside-avoid cursor-pointer rounded-xl overflow-hidden border border-border hover:shadow-lg transition-all"
+                className="break-inside-avoid cursor-pointer group"
                 onClick={() => setSelected(img)}
               >
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full h-auto object-cover"
-                  loading="lazy"
-                />
+                <div className="relative p-[3px] bg-gradient-to-br from-gold to-gold-light/60 rounded-sm">
+                  <div className="relative overflow-hidden bg-bg">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-auto object-cover block"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent bg-[length:200%_100%] opacity-0 group-hover:opacity-100 group-hover:animate-[shimmer_1.5s_ease-in-out] transition-opacity duration-300 pointer-events-none" />
+                  </div>
+                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-gold pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-gold pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-gold pointer-events-none" />
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-gold pointer-events-none" />
+                </div>
               </div>
             ))}
           </div>
@@ -73,11 +85,16 @@ export default function GalleryPage() {
 
       {selected && (
         <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setSelected(null)}>
-          <div className="relative max-w-3xl w-full" onClick={(e) => e.stopPropagation()}>
-            <button className="absolute top-2 right-2 z-10 bg-black/50 text-white rounded-full p-2 hover:bg-black/70" onClick={() => setSelected(null)}>
-              <X className="w-5 h-5" />
+          <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="absolute -top-3 -right-3 z-10 bg-gold text-primary rounded-full p-2 hover:bg-gold-light transition-colors shadow-lg"
+              onClick={() => setSelected(null)}
+            >
+              <X className="w-4 h-4" />
             </button>
-            <img src={selected.src} alt={selected.alt} className="w-full h-auto rounded-xl" />
+            <div className="p-[3px] bg-gradient-to-br from-gold to-gold-light/60 rounded-sm">
+              <img src={selected.src} alt={selected.alt} className="w-full h-auto block" />
+            </div>
           </div>
         </div>
       )}
